@@ -165,7 +165,7 @@ function setupBuffers(){
 
 //----------------------------------------------------------------------------------
 function draw() { 
-    var transformVec = vec3.create();
+    var translateVec = vec3.create();
     var scaleVec = vec3.create();
   
     gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
@@ -176,9 +176,8 @@ function draw() {
  
     //Draw 
     mvPushMatrix();
-    vec3.set(transformVec,0.0,0.0,-0.5);
-    mat4.translate(mvMatrix, mvMatrix,transformVec);
-//    mat4.rotateX(mvMatrix,mvMatrix,modelXRotationRadians);
+//    vec3.set(translateVec,0.0,0.0,0.0);
+//    mat4.translate(mvMatrix, mvMatrix,translateVec);
     mat4.rotateY(mvMatrix,mvMatrix,modelYRotationRadians);
     setMatrixUniforms();
     drawSkybox();
@@ -203,8 +202,8 @@ function animate() {
         then = now;
 
         //Animate the rotation
-        modelXRotationRadians += 1.2 * deltaTime;
-        modelYRotationRadians += 0.7 * deltaTime;  
+//        modelXRotationRadians += 1.2 * deltaTime;
+//        modelYRotationRadians += 0.7 * deltaTime;  
     }
 }
 
@@ -283,6 +282,9 @@ function startup() {
   gl = createGLContext(canvas);
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   gl.enable(gl.DEPTH_TEST);
+	
+  // set up event listener for keystrokes
+  document.onkeydown = handleKeyDown;
     
   setupShaders();
   setupBuffers();
