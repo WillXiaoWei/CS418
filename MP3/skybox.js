@@ -78,18 +78,23 @@ function setupSkybox() {
 function drawSkybox(){
   switchShaders(true);
 	
-  // Draw the cube by binding the array buffer to the cube's vertices
-  // array, setting attributes, and pushing it to GL.
-  gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexBuffer);
-  gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
+	// Draw the cube by binding the array buffer to the cube's vertices
+	// array, setting attributes, and pushing it to GL.
+	gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexBuffer);
+	gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
+	
+	// Draw the cube by binding the array buffer to the cube's vertices
+	// array, setting attributes, and pushing it to GL.
+	gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexBuffer);
+	gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, 3, gl.FLOAT, false, 0, 0);
 
-  // Specify the texture to map onto the faces.
-  gl.activeTexture(gl.TEXTURE0);
-  gl.bindTexture(gl.TEXTURE_CUBE_MAP, cubeTexture);
-  gl.uniform1i(gl.getUniformLocation(shaderProgram, "uSampler"), 0);
+	// Specify the texture to map onto the faces.
+	gl.activeTexture(gl.TEXTURE0);
+	gl.bindTexture(gl.TEXTURE_CUBE_MAP, cubeTexture);
+	gl.uniform1i(gl.getUniformLocation(shaderProgram, "uSampler"), 0);
 
-  // Draw the cube.
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeTriIndexBuffer);
-  setMatrixUniforms();
-  gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
+	// Draw the cube.
+	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeTriIndexBuffer);
+	setMatrixUniforms();
+	gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
 }
