@@ -9,6 +9,7 @@
 <script id="shader-vs" type="x-shader/x-vertex">
    attribute vec3 aVertexNormal;
    attribute vec3 aVertexPosition;
+   attribute float a_is_skybox;
    // attribute vec2 aTexCoord;
    
    uniform mat4 uMVMatrix;
@@ -18,23 +19,28 @@
 
    void main(void) { 
      gl_Position = uPMatrix*uMVMatrix*vec4(aVertexPosition, 1.0);
-     vVertexPosition = aVertexPosition;    
+     vVertexPosition = aVertexPosition;
     }
 </script>
   
 <script id="shader-fs" type="x-shader/x-fragment">
-precision mediump float;
- 
-// Passed in from the vertex shader.
-// varying vec2 vTexCoord;
-varying vec3 vVertexPosition;
- 
-// The texture.
-uniform samplerCube uSampler;
- 
-void main() {
-   gl_FragColor = textureCube(uSampler, normalize(vVertexPosition));
-}
+	precision mediump float;
+
+	// Passed in from the vertex shader.
+	varying vec3 vVertexPosition;
+
+	// The texture
+	uniform samplerCube uSampler;
+
+	// Dictates how to set gl_FragColor
+	uniform float uIsSkybox;
+
+	void main() {
+		if (uIsSkybox > 0.5)
+			gl_FragColor = textureCube(uSampler, normalize(vVertexPosition));
+		else
+			gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
+	}
 </script>
 
 <script src="gl-matrix-min.js"></script>  

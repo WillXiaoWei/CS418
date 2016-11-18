@@ -25,10 +25,7 @@ function setupTeapotBuffers(raw_file_text){
 			count_faces += 1;
 		}
 	}
-	
-	console.log(vertices);
-	console.log(faces);
-	
+		
 	teapotVertexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, teapotVertexBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
@@ -41,7 +38,8 @@ function setupTeapotBuffers(raw_file_text){
 }
 
 function drawTeapot(){
-	console.log(teapotVertexBuffer);
+  switchShaders(false);
+	
   // Draw the cube by binding the array buffer to the cube's vertices
   // array, setting attributes, and pushing it to GL.
   gl.bindBuffer(gl.ARRAY_BUFFER, teapotVertexBuffer);

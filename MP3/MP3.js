@@ -130,6 +130,11 @@ function loadShaderFromDOM(id) {
 }
 
 //----------------------------------------------------------------------------------
+function switchShaders(isSkybox){
+	gl.uniform1f(gl.getUniformLocation(shaderProgram, "uIsSkybox"), isSkybox);
+}
+
+//----------------------------------------------------------------------------------
 function setupShaders() {
   vertexShader = loadShaderFromDOM("shader-vs");
   fragmentShader = loadShaderFromDOM("shader-fs");
@@ -144,11 +149,6 @@ function setupShaders() {
   }
 
   gl.useProgram(shaderProgram);
-
-  
-//  shaderProgram.texCoordAttribute = gl.getAttribLocation(shaderProgram, "aTexCoord");
-//  console.log("Tex coord attrib: ", shaderProgram.texCoordAttribute);
-//  gl.enableVertexAttribArray(shaderProgram.texCoordAttribute);
     
   shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
   console.log("Vertex attrib: ", shaderProgram.vertexPositionAttribute);
@@ -181,7 +181,7 @@ function draw() {
     mat4.translate(mvMatrix, mvMatrix,translateVec);
     mat4.rotateY(mvMatrix,mvMatrix,modelYRotationRadians);
     setMatrixUniforms();
-//    drawSkybox();
+    drawSkybox();
 	drawTeapot();
     mvPopMatrix();
   
