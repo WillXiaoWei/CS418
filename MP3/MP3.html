@@ -15,6 +15,7 @@
    uniform mat4 uMVMatrix;
    uniform mat4 uPMatrix;
    uniform mat3 uNMatrix;
+   uniform mat4 uRotateMat;
    uniform vec3 uLightPosition;
    uniform vec3 uAmbientLightColor;
    uniform vec3 uDiffuseLightColor;
@@ -62,7 +63,9 @@
 	   
 	   gl_Position = uPMatrix*uMVMatrix*vec4(aVertexPosition, 1.0);
 	   vVertexPosition = aVertexPosition;
-	   vVertexNormal = aVertexNormal;
+//	   vVertexNormal = aVertexNormal;
+	   vec4 temp = uRotateMat * vec4(aVertexNormal, 1.0);
+	   vVertexNormal = vec3(temp[0], temp[1], temp[2]);
     }
 </script>
   
@@ -102,5 +105,12 @@
 <script src="webgl-utils.js"></script> 
 <body onload="startup();">
 <canvas id="myGLCanvas" width="800" height="800"></canvas>
+	<form id="input_form">
+        <fieldset>
+            <legend>Controls</legend>
+            Left Arrow Key:     Revolve Left<br>
+            Right Arrow Key:    Revolve Right<br>
+        </fieldset>
+        </form>
 </body>
 </html>

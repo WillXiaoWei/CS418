@@ -81,6 +81,11 @@ function uploadViewDirToShader(){
 }
 
 //----------------------------------------------------------------------------------
+function uploadRotateMatrixToShader(rotateMat){
+	gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, "uRotateMat"), false, rotateMat);
+}
+
+//----------------------------------------------------------------------------------
 function mvPushMatrix() {
     var copy = mat4.clone(mvMatrix);
     mvMatrixStack.push(copy);
@@ -229,17 +234,20 @@ function draw() {
  
     //Draw 
     mvPushMatrix();
+	var rotateMat = mat4.create();
+	mat4.rotateY(rotateMat, rotateMat, modelYRotationRadians);
+	uploadRotateMatrixToShader(rotateMat);
     vec3.set(translateVec,0.0,0.0,-10.0);
     mat4.translate(mvMatrix, mvMatrix,translateVec);
     setMatrixUniforms();
 	
     vec3.add(viewPt, eyePt, viewDir);
     mat4.lookAt(mvMatrix,eyePt,viewPt,up);
-	uploadLightsToShader([0,10,0],[0.1,0.1,0.1],[0.3,0.3,0.3],[0.3,0.3,0.3]);
+	uploadLightsToShader([0,20,0],[0.0,0.0,0.0],[0.3,0.3,0.3],[0.3,0.3,0.3]);
 	
     drawSkybox();
 	if (ready_to_draw){
-//		mat4.rotateY(mvMatrix,mvMatrix,modelYRotationRadians);
+		mat4.rotateY(mvMatrix,mvMatrix,modelYRotationRadians);
 		drawTeapot();
 	}
     mvPopMatrix();
@@ -261,6 +269,9 @@ function animate() {
 		var deltaTime = now - then;
 		// Remember the current time for the next frame.
 		then = now;  
+		
+		// Animate the Rotation
+		modelYRotationRadians += 0.01;
     }
 }
 

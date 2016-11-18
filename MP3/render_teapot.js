@@ -71,8 +71,6 @@ function drawTeapot(){
 	gl.bindBuffer(gl.ARRAY_BUFFER, teapotVertexNormalBuffer);
 	gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, 3, gl.FLOAT, false, 0, 0);  
 
-	// TODO: Environment Map
-
 	// Draw the cube.
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, teapotTriIndexBuffer);
 	setMatrixUniforms();
