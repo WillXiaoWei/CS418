@@ -161,6 +161,7 @@ function setupShaders() {
 //----------------------------------------------------------------------------------
 function setupBuffers(){
     setupSkybox();
+	readTextFile("teapot_0.obj", setupTeapotBuffers);
 }
 
 //----------------------------------------------------------------------------------
@@ -176,11 +177,12 @@ function draw() {
  
     //Draw 
     mvPushMatrix();
-//    vec3.set(translateVec,0.0,0.0,0.0);
-//    mat4.translate(mvMatrix, mvMatrix,translateVec);
+    vec3.set(translateVec,0.0,0.0,-10.0);
+    mat4.translate(mvMatrix, mvMatrix,translateVec);
     mat4.rotateY(mvMatrix,mvMatrix,modelYRotationRadians);
     setMatrixUniforms();
-    drawSkybox();
+//    drawSkybox();
+	drawTeapot();
     mvPopMatrix();
   
 }
