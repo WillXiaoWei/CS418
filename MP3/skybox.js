@@ -1,4 +1,13 @@
-//----------------------------------------------------------------------------------
+/**
+* @fileoverview This file is concerned with all parts of the rendering process for the skybox.
+* It sets up the vertex position and tri-index buffers. It also contains the helper
+* function to draw the skybox. This file is dependent upon gl-matrix-min.js and webgl-utils.js.
+*/
+
+/**
+* Function to setup the vertex and tri-index buffers for the skybox cube.
+* @return None
+*/
 function setupSkybox() {
 
   // Create a buffer for the cube's vertices.
@@ -74,7 +83,11 @@ function setupSkybox() {
       new Uint16Array(cubeVertexIndices), gl.STATIC_DRAW);
 }
 
-//-----------------------------------------------------------------------------------
+/**
+* Helper function to draw() routine to set the vertex positions before drawing the 
+*    skybox for each frame. Also switches the shader to the skybox settings.
+* @return None
+*/
 function drawSkybox(){
   switchShaders(true);
 	

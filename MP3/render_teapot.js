@@ -1,8 +1,20 @@
+/**
+* @fileoverview This file is concerned with all parts of the rendering process for the teapot.
+* It sets up the vertex position, normal and tri-index buffers. It also contains the helper
+* function to draw the teapot. This file is dependent upon gl-matrix-min.js and webgl-utils.js.
+*/
+
+// Global buffers used to render teapot
 var teapotVertexBuffer;
 var teapotVertexNormalBuffer;
 var teapotTriIndexBuffer;
 
-// ------------------------------------------------------
+/**
+* Function to parse the teapot_0.obj file and setup the vertex and tri-index buffers. Then,
+* 	based on the data collected, calculating the vertex normal buffers.
+* @param {string} raw_file_text The entire teapot_0.obj file as one string
+* @return None
+*/
 function setupTeapotBuffers(raw_file_text){
 	var vertices = [];
 	var faces = [];
@@ -14,12 +26,14 @@ function setupTeapotBuffers(raw_file_text){
 	for (var line_num in lines){
 		list_elements = lines[line_num].split(' ');
 		
+		// line corresponds to vertex information
 		if (list_elements[0] == 'v'){
 			vertices.push(parseFloat(list_elements[1]));
 			vertices.push(parseFloat(list_elements[2]));
 			vertices.push(parseFloat(list_elements[3]));
 			count_vertices += 1;
 		}
+		// line corresponds to face information
 		else if(list_elements[0] == 'f'){
 			faces.push(parseInt(list_elements[2])-1);
 			faces.push(parseInt(list_elements[3])-1);
@@ -41,6 +55,7 @@ function setupTeapotBuffers(raw_file_text){
 		normals.push(0);
 		normals.push(0);
 	}
+	// Calculate vertex normals
 	calculateNormals(vertices, faces, count_faces, count_vertices, normals);
 	
 	// bind normal data
@@ -56,9 +71,15 @@ function setupTeapotBuffers(raw_file_text){
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(faces), gl.STATIC_DRAW);
 	teapotTriIndexBuffer.numItems = count_faces;
 	
+	// Global indicator that teapot can now be rendered
 	ready_to_draw = true;
 }
 
+/**
+* Helper function to draw() routine to set the vertex positions and vertex normals before
+*   drawing the teapot for each frame. Also switches the shader to the teapot settings.
+* @return None
+*/
 function drawTeapot(){
 	switchShaders(false);
 	uploadViewDirToShader()
