@@ -333,7 +333,7 @@ function animate() {
 		then = now;  
 		
 		// Animate the Rotation
-		modelYRotationRadians += 0.01;
+//		modelYRotationRadians += 0.01;
     }
 }
 

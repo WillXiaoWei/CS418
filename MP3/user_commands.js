@@ -30,7 +30,7 @@ function quatRotation(rotationRate, rotAxis){
 *   keystroke.
 */
 function handleKeyDown(event){
-	// left arrow key -> roll left
+	// left arrow key -> orbit left
     if (event.keyCode == 37){
         // rotate around origUp
         quatRotation(-0.05, origUp);
@@ -39,7 +39,7 @@ function handleKeyDown(event){
 		vec3.normalize(viewDir, eyePt);
 		vec3.scale(viewDir, viewDir, -1);
     }
-    // right arrow key -> roll right
+    // right arrow key -> orbit right
     else if (event.keyCode == 39){
         // rotate around origUp
         quatRotation(0.05, origUp);
@@ -48,5 +48,13 @@ function handleKeyDown(event){
 		vec3.normalize(viewDir, eyePt);
 		vec3.scale(viewDir, viewDir, -1);
     }
+	// Up arrow key -> spin teapot right
+	else if (event.keyCode == 38){
+		modelYRotationRadians += 0.05;
+	}
+	// Down arrow key -> spin teapot left
+	else if (event.keyCode == 40){
+		modelYRotationRadians -= 0.05;
+	}
 }
 
